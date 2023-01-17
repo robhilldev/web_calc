@@ -1,0 +1,12 @@
+td {
+  width: 15vh;
+  height: 7.5vh;
+  border: 0.1vw solid #282c34;
+}
+
+button {
+  width: 100%;
+  height: 100%;
+  border-radius: 0%;
+  border: none;
+}
