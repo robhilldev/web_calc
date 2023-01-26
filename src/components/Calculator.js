@@ -3,44 +3,54 @@ import { Result } from './Result';
 import './Calculator.module.css';
 
 export class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { lastClicked: null };
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    this.setState({ lastClicked: e.target.className });
+  }
 
   render() {
     return (
       <table cellPadding={0}>
         <thead>
           <tr>
-            <th><Result value={null} /></th>
+            <th><Result data={this.state.lastClicked} /></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><button className="AC">AC</button></td>
-            <td><button className="+/-">+/-</button></td>
-            <td><button className="%">%</button></td>
-            <td><button className="÷">÷</button></td>
+            <td><button className="AC" onClick={this.handleClick}>AC</button></td>
+            <td><button className="+/-" onClick={this.handleClick}>+/-</button></td>
+            <td><button className="%" onClick={this.handleClick}>%</button></td>
+            <td><button className="÷" onClick={this.handleClick}>÷</button></td>
           </tr>
           <tr>
-            <td><button className="7">7</button></td>
-            <td><button className="8">8</button></td>
-            <td><button className="9">9</button></td>
-            <td><button className="X">X</button></td>
+            <td><button className="7" onClick={this.handleClick}>7</button></td>
+            <td><button className="8" onClick={this.handleClick}>8</button></td>
+            <td><button className="9" onClick={this.handleClick}>9</button></td>
+            <td><button className="X" onClick={this.handleClick}>X</button></td>
           </tr>
           <tr>
-            <td><button className="4">4</button></td>
-            <td><button className="5">5</button></td>
-            <td><button className="6">6</button></td>
-            <td><button className="-">-</button></td>
+            <td><button className="4" onClick={this.handleClick}>4</button></td>
+            <td><button className="5" onClick={this.handleClick}>5</button></td>
+            <td><button className="6" onClick={this.handleClick}>6</button></td>
+            <td><button className="-" onClick={this.handleClick}>-</button></td>
           </tr>
           <tr>
-            <td><button className="1">1</button></td>
-            <td><button className="2">2</button></td>
-            <td><button className="3">3</button></td>
-            <td><button className="+">+</button></td>
+            <td><button className="1" onClick={this.handleClick}>1</button></td>
+            <td><button className="2" onClick={this.handleClick}>2</button></td>
+            <td><button className="3" onClick={this.handleClick}>3</button></td>
+            <td><button className="+" onClick={this.handleClick}>+</button></td>
           </tr>
           <tr>
-            <td colSpan={2}><button className="0">0</button></td>
-            <td><button className=".">.</button></td>
-            <td><button className="=">=</button></td>
+            <td colSpan={2}><button className="0" onClick={this.handleClick}>0</button></td>
+            <td><button className="." onClick={this.handleClick}>.</button></td>
+            <td><button className="=" onClick={this.handleClick}>=</button></td>
           </tr>
         </tbody>
       </table>
