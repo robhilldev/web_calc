@@ -1,46 +1,46 @@
 import React from 'react';
-import { Button } from './Button';
 import { Result } from './Result';
 import './Calculator.module.css';
 
 export class Calculator extends React.Component {
+
   render() {
     return (
       <table cellPadding={0}>
         <thead>
           <tr>
-            <th><Result value="75" /></th>
+            <th><Result value={null} /></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><Button name="ac" label="AC" /></td>
-            <td><Button name="plus-minus" label="+/-" /></td>
-            <td><Button name="percent" label="%" /></td>
-            <td><Button name="divide" label="÷" /></td>
+            <td><button className="AC">AC</button></td>
+            <td><button className="+/-">+/-</button></td>
+            <td><button className="%">%</button></td>
+            <td><button className="÷">÷</button></td>
           </tr>
           <tr>
-            <td><Button name="seven" label="7" /></td>
-            <td><Button name="eight" label="8" /></td>
-            <td><Button name="nine" label="9" /></td>
-            <td><Button name="multiply" label="X" /></td>
+            <td><button className="7">7</button></td>
+            <td><button className="8">8</button></td>
+            <td><button className="9">9</button></td>
+            <td><button className="X">X</button></td>
           </tr>
           <tr>
-            <td><Button name="four" label="4" /></td>
-            <td><Button name="five" label="5" /></td>
-            <td><Button name="six" label="6" /></td>
-            <td><Button name="subtract" label="-" /></td>
+            <td><button className="4">4</button></td>
+            <td><button className="5">5</button></td>
+            <td><button className="6">6</button></td>
+            <td><button className="-">-</button></td>
           </tr>
           <tr>
-            <td><Button name="one" label="1" /></td>
-            <td><Button name="two" label="2" /></td>
-            <td><Button name="three" label="3" /></td>
-            <td><Button name="add" label="+" /></td>
+            <td><button className="1">1</button></td>
+            <td><button className="2">2</button></td>
+            <td><button className="3">3</button></td>
+            <td><button className="+">+</button></td>
           </tr>
           <tr>
-            <td colSpan={2}><Button name="zero" label="0" /></td>
-            <td><Button name="dot" label="." /></td>
-            <td><Button name="equals" label="=" /></td>
+            <td colSpan={2}><button className="0">0</button></td>
+            <td><button className=".">.</button></td>
+            <td><button className="=">=</button></td>
           </tr>
         </tbody>
       </table>
