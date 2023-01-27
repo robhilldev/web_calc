@@ -2,6 +2,7 @@ import React from 'react';
 import { Result } from './Result';
 import './Calculator.module.css';
 
+// the bottom pane containing all of the buttons
 export class Calculator extends React.Component {
   constructor(props) {
     super(props);
