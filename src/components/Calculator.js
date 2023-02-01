@@ -12,17 +12,21 @@ export class Calculator extends React.Component {
   }
 
   handleClick(e) {
+    let newClick;
+
     if (e.target.className !== "+/-") {
       // handle all clicks except for "+/- button"
-      this.setState({ lastClicked: e.target.className });
+      newClick = e.target.className;
     } else {
       //handle "+/-" button clicks
       if (e.target.className === "+/-" && this.state.lastClicked !== "flipped") {
-        this.setState({ lastClicked: e.target.id });
+        newClick = e.target.id;
       } else if (e.target.className === "+/-" && this.state.lastClicked === "flipped") {
-        this.setState({ lastClicked: e.target.className });
+        newClick = e.target.className;
       }
     }
+
+    this.setState({ lastClicked: newClick });
   }
 
   render() {
