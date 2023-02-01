@@ -12,7 +12,17 @@ export class Calculator extends React.Component {
   }
 
   handleClick(e) {
-    this.setState({ lastClicked: e.target.className });
+    if (e.target.className !== "+/-") {
+      // handle all clicks except for "+/- button"
+      this.setState({ lastClicked: e.target.className });
+    } else {
+      //handle "+/-" button clicks
+      if (e.target.className === "+/-" && this.state.lastClicked !== "flipped") {
+        this.setState({ lastClicked: e.target.id });
+      } else if (e.target.className === "+/-" && this.state.lastClicked === "flipped") {
+        this.setState({ lastClicked: e.target.className });
+      }
+    }
   }
 
   render() {
@@ -26,7 +36,9 @@ export class Calculator extends React.Component {
         <tbody>
           <tr>
             <td><button className="AC" onClick={this.handleClick}>AC</button></td>
-            <td><button className="+/-" onClick={this.handleClick}>+/-</button></td>
+            <td>
+              <button className="+/-" id="flipped" onClick={this.handleClick}>+/-</button>
+            </td>
             <td><button className="%" onClick={this.handleClick}>%</button></td>
             <td><button className="÷" onClick={this.handleClick}>÷</button></td>
           </tr>
