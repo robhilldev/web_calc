@@ -19,9 +19,9 @@ export class Calculator extends React.Component {
       newClick = e.target.className;
     } else {
       //handle "+/-" button clicks
-      if (e.target.className === "+/-" && this.state.lastClicked !== "flipped") {
+      if (e.target.className === "+/-" && this.state.lastClicked !== "negative") {
         newClick = e.target.id;
-      } else if (e.target.className === "+/-" && this.state.lastClicked === "flipped") {
+      } else if (e.target.className === "+/-" && this.state.lastClicked === "negative") {
         newClick = e.target.className;
       }
     }
@@ -41,7 +41,7 @@ export class Calculator extends React.Component {
           <tr>
             <td><button className="AC" onClick={this.handleClick}>AC</button></td>
             <td>
-              <button className="+/-" id="flipped" onClick={this.handleClick}>+/-</button>
+              <button className="+/-" id="negative" onClick={this.handleClick}>+/-</button>
             </td>
             <td><button className="%" onClick={this.handleClick}>%</button></td>
             <td><button className="÷" onClick={this.handleClick}>÷</button></td>

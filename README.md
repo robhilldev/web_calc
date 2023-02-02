@@ -5,7 +5,7 @@ This app is a practice project for learning react.
 
 
 
-This app was bootstrapped using Create-React-App (https://create-react-app.dev/)
+This app was bootstrapped using Create-React-App. (https://create-react-app.dev/)
 
 ## Available Scripts
 
