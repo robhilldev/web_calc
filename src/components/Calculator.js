@@ -50,7 +50,7 @@ export class Calculator extends React.Component {
             <td><button className="7" onClick={this.handleClick}>7</button></td>
             <td><button className="8" onClick={this.handleClick}>8</button></td>
             <td><button className="9" onClick={this.handleClick}>9</button></td>
-            <td><button className="X" onClick={this.handleClick}>X</button></td>
+            <td><button className="*" onClick={this.handleClick}>X</button></td>
           </tr>
           <tr>
             <td><button className="4" onClick={this.handleClick}>4</button></td>

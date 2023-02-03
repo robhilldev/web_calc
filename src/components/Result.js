@@ -25,13 +25,18 @@ export class Result extends React.Component {
       if (click === "AC" || click === "negative" || click === "+/-" || click === "%") {
         // on "AC", "+/-", or "%" button clicks, modify value based on operator
         currentDisplayed = this.performMiscOperation(click);
+      } else if (click === "+" || click === "-" || click === "*" || click === "÷" || click === ".") {
+        // on operator click, updated displayed, push to operator array
+        currentDisplayed += click;
+        operationArray.push(click);
       } else if (click === "=") {
-        // on "=" button click, produce result of calculation
+        // on "=" button click, display result of calculation
         currentDisplayed = this.performCalculation();
       } else {
-        // on number or operator click, push to value array for later evaluation
-        // also, update displayed value
-        currentDisplayed = click;
+        // on number click, update displayed value and push to operator array
+        if (this.state.displayed === 0) { currentDisplayed = click; }
+        else { currentDisplayed += click; }
+        operationArray.push(parseInt(click));
       }
 
       this.setState({ displayed: currentDisplayed });
@@ -50,13 +55,16 @@ export class Result extends React.Component {
     } else if ((click === "negative" || click === "+/-") && displayed > 0) {
       // on "+/-" button click, flip result from positive to negative
       output = -Math.abs(displayed);
+      operationArray[operationArray.length - 1] = output;
     } else if ((click === "negative" || click === "+/-") && displayed < 0) {
       // on "+/-" button click, flip result from negative to positive
       output = Math.abs(displayed);
+      operationArray[operationArray.length - 1] = output;
     } else if (click === "%") {
       // on "%" button click, move two decimal places down
       // VVV TODO - continue moving decimal place after first click VVV
       output = displayed * 0.01;
+      operationArray[operationArray.length - 1] = output;
     }
 
     return output;
@@ -67,6 +75,8 @@ export class Result extends React.Component {
   performCalculation() {
     let result = operationArray;
     operationArray = [];
+    // placeholder lul
+    result = 42;
     return result;
   }
 
