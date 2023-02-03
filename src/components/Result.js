@@ -17,6 +17,7 @@ export class Result extends React.Component {
   }
 
   // determine what to display upon action
+  // *** TODO - move display logic out to an updateDisplay method ***
   componentDidUpdate(prevProps) {
     if (prevProps.data !== this.props.data) {
       let currentDisplayed = this.state.displayed;
@@ -27,14 +28,17 @@ export class Result extends React.Component {
         currentDisplayed = this.performMiscOperation(click);
       } else if (click === "+" || click === "-" || click === "*" || click === "÷" || click === ".") {
         // on operator click, updated displayed, push to operator array
-        currentDisplayed += click;
+        currentDisplayed = click;
         operationArray.push(click);
       } else if (click === "=") {
         // on "=" button click, display result of calculation
         currentDisplayed = this.performCalculation();
       } else {
         // on number click, update displayed value and push to operator array
-        if (this.state.displayed === 0) { currentDisplayed = click; }
+        if (currentDisplayed === 0 || currentDisplayed === "+" || currentDisplayed === "-" ||
+          currentDisplayed === "*" || currentDisplayed === "÷") {
+          currentDisplayed = click;
+        }
         else { currentDisplayed += click; }
         operationArray.push(parseInt(click));
       }
@@ -62,7 +66,7 @@ export class Result extends React.Component {
       operationArray[operationArray.length - 1] = output;
     } else if (click === "%") {
       // on "%" button click, move two decimal places down
-      // VVV TODO - continue moving decimal place after first click VVV
+      // *** TODO - continue moving decimal place after first click ***
       output = displayed * 0.01;
       operationArray[operationArray.length - 1] = output;
     }
@@ -71,11 +75,11 @@ export class Result extends React.Component {
   }
 
   // handle "=" button click, perform the calculation
-  // VVV TODO VVV
+  // *** TODO ***
   performCalculation() {
     let result = operationArray;
     operationArray = [];
-    // placeholder lul
+    // *** placeholder lul ***
     result = 42;
     return result;
   }

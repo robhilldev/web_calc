@@ -41,6 +41,7 @@ export class Calculator extends React.Component {
           <tr>
             <td><button className="AC" onClick={this.handleClick}>AC</button></td>
             <td>
+              {/* id for flipping between positive and negative on subsequent clicks */}
               <button className="+/-" id="negative" onClick={this.handleClick}>+/-</button>
             </td>
             <td><button className="%" onClick={this.handleClick}>%</button></td>
