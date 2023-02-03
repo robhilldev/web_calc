@@ -26,7 +26,7 @@ export class Result extends React.Component {
       if (click === "AC" || click === "negative" || click === "+/-" || click === "%") {
         // on "AC", "+/-", or "%" button clicks, modify value based on operator
         currentDisplayed = this.performMiscOperation(click);
-      } else if (click === "+" || click === "-" || click === "*" || click === "÷" || click === ".") {
+      } else if (click === "+" || click === "-" || click === "*" || click === "÷") {
         // on operator click, updated displayed, push to operator array
         currentDisplayed = click;
         operationArray.push(click);
@@ -40,7 +40,9 @@ export class Result extends React.Component {
           currentDisplayed = click;
         }
         else { currentDisplayed += click; }
-        operationArray.push(parseInt(click));
+        // parse numbers as integers, don't parse "."s as integers
+        if (click === ".") { operationArray.push(click); }
+        else { operationArray.push(parseInt(click)); }
       }
 
       this.setState({ displayed: currentDisplayed });
