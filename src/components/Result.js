@@ -23,30 +23,40 @@ export class Result extends React.Component {
       let currentDisplayed = this.state.displayed;
       let click = this.props.data;
 
-      if (click === "AC" || click === "negative" || click === "+/-" || click === "%") {
-        // on "AC", "+/-", or "%" button clicks, modify value based on operator
-        currentDisplayed = this.performMiscOperation(click);
-      } else if (click === "+" || click === "-" || click === "*" || click === "÷") {
-        // on operator click, updated displayed, push to operator array
-        currentDisplayed = click;
-        operationArray.push(click);
-      } else if (click === "=") {
-        // on "=" button click, display result of calculation
-        currentDisplayed = this.performCalculation();
-      } else {
-        // on number click, update displayed value and push to operator array
-        if (currentDisplayed === 0 || currentDisplayed === "+" || currentDisplayed === "-" ||
-          currentDisplayed === "*" || currentDisplayed === "÷") {
-          currentDisplayed = click;
-        }
-        else { currentDisplayed += click; }
-        // parse numbers as integers, don't parse "."s as integers
-        if (click === ".") { operationArray.push(click); }
-        else { operationArray.push(parseInt(click)); }
-      }
-
+      currentDisplayed = this.updateDisplay(currentDisplayed, click);
       this.setState({ displayed: currentDisplayed });
     }
+  }
+
+  // update value shown in results pane, and push to operator array on some clicks
+  updateDisplay(currentDisplayed, click) {
+    let displayed = currentDisplayed;
+
+    if (click === "AC" || click === "negative" || click === "+/-" || click === "%") {
+      // on "AC", "+/-", or "%" button clicks, modify value based on operator
+      displayed = this.performMiscOperation(click);
+    } else if (click === "+" || click === "-" || click === "*" || click === "÷") {
+      // on operator click, update display and push to operator array
+      displayed = click;
+      operationArray.push(click);
+    } else if (click === "=") {
+      // on "=" button click, display result of calculation
+      displayed = this.performCalculation();
+    } else {
+      // on number click, update display and push to operator array
+      // don't parse operators as integers
+      if (displayed === 0 || displayed === "+" || displayed === "-" ||
+        displayed === "*" || currentDisplayed === "÷") {
+        displayed = click;
+      }
+      else { displayed += click; }
+      // don't parse "." as an integer
+      if (click === ".") { operationArray.push(click); }
+      //parse numbers as integers
+      else { operationArray.push(parseInt(click)); }
+    }
+
+    return displayed;
   }
 
   // handle "AC", "+/-", and "%" button clicks
