@@ -12,18 +12,20 @@ export class Calculator extends React.Component {
   }
 
   handleClick(e) {
+    const name = e.target.className;
     let newClick;
 
-    if (e.target.className !== "+/-") {
-      // handle all clicks except for "+/- button"
-      newClick = e.target.className;
+    // no class change on consecutive clicks of "AC", ".", "÷", "*", "-", "+", "="
+    // toggle className on consecutive clicks of numbers, "+/-", and "%"
+    if (name === "AC" || name === "." || name === "÷" || name === "*" ||
+      name === "-" || name === "+" || name === "=") {
+      newClick = name;
+    } else if (e.target.className.includes("flipped")) {
+      newClick = name;
+      e.target.classList.remove("flipped");
     } else {
-      //handle "+/-" button clicks
-      if (e.target.className === "+/-" && this.state.lastClicked !== "negative") {
-        newClick = e.target.id;
-      } else if (e.target.className === "+/-" && this.state.lastClicked === "negative") {
-        newClick = e.target.className;
-      }
+      newClick = name;
+      e.target.classList.add("flipped");
     }
 
     this.setState({ lastClicked: newClick });
@@ -40,10 +42,7 @@ export class Calculator extends React.Component {
         <tbody>
           <tr>
             <td><button className="AC" onClick={this.handleClick}>AC</button></td>
-            <td>
-              {/* id for flipping between positive and negative on subsequent clicks */}
-              <button className="+/-" id="negative" onClick={this.handleClick}>+/-</button>
-            </td>
+            <td><button className="+/-" onClick={this.handleClick}>+/-</button></td>
             <td><button className="%" onClick={this.handleClick}>%</button></td>
             <td><button className="÷" onClick={this.handleClick}>÷</button></td>
           </tr>

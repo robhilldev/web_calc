@@ -17,11 +17,10 @@ export class Result extends React.Component {
   }
 
   // determine what to display upon action
-  // *** TODO - move display logic out to an updateDisplay method ***
   componentDidUpdate(prevProps) {
     if (prevProps.data !== this.props.data) {
       let currentDisplayed = this.state.displayed;
-      let click = this.props.data;
+      let click = this.props.data.split(" ")[0];
 
       currentDisplayed = this.updateDisplay(currentDisplayed, click);
       this.setState({ displayed: currentDisplayed });
@@ -78,8 +77,7 @@ export class Result extends React.Component {
       operationArray[operationArray.length - 1] = output;
     } else if (click === "%") {
       // on "%" button click, move two decimal places down
-      // *** TODO - continue moving decimal place after first click ***
-      output = displayed * 0.01;
+      output = parseFloat(displayed) * 0.01;
       operationArray[operationArray.length - 1] = output;
     }
 
