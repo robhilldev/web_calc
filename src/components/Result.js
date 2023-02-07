@@ -8,12 +8,13 @@ let operationArray = [];
 export class Result extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { displayed: null };
+    this.state = { displayed: null, opArr: operationArray };
   }
 
   // set the initial value displayed in result pane
   componentDidMount() {
-    this.setState({ displayed: 0 });
+    operationArray = ["0"];
+    this.setState({ displayed: "0", opArr: operationArray });
   }
 
   // determine what to display upon action
@@ -22,8 +23,16 @@ export class Result extends React.Component {
       let currentDisplayed = this.state.displayed;
       let click = this.props.data.split(" ")[0];
 
-      currentDisplayed = this.updateDisplay(currentDisplayed, click);
-      this.setState({ displayed: currentDisplayed });
+      if (prevProps.data === "=" || prevProps.data === "AC" || prevProps.data === null) {
+        // replace previous contents of result pane on new button click
+        // or add a first click of "." after a "0"
+        currentDisplayed = this.updateDisplay("0", click);
+      } else {
+        // update result pane normally
+        currentDisplayed = this.updateDisplay(currentDisplayed, click);
+      }
+
+      this.setState({ displayed: currentDisplayed, opArr: operationArray });
     }
   }
 
@@ -37,25 +46,32 @@ export class Result extends React.Component {
     } else if (click === "+" || click === "-" || click === "*" || click === "÷") {
       // on operator click, update display and push to operator array
       displayed = click;
-      operationArray.push(click);
+      this.updateOperationArray(click);
     } else if (click === "=") {
       // on "=" button click, display result of calculation
       displayed = this.performCalculation();
     } else {
-      // on number click, update display and push to operator array
-      // don't parse operators as integers
-      if (displayed === 0 || displayed === "+" || displayed === "-" ||
-        displayed === "*" || currentDisplayed === "÷") {
+      // on number or "." click, update display and push to operator array
+      if (displayed === "+" || displayed === "-" ||
+        displayed === "*" || displayed === "÷") {
         displayed = click;
-      }
-      else { displayed += click; }
-      // don't parse "." as an integer
-      if (click === ".") { operationArray.push(click); }
-      //parse numbers as integers
-      else { operationArray.push(parseInt(click)); }
+      } else { displayed += click; }
+      this.updateOperationArray(click);
     }
 
     return displayed;
+  }
+
+  // update operation array on number, ".", "+", "-", "X", or "÷" clicks
+  updateOperationArray(click) {
+    let lastValue = operationArray[operationArray.length - 1];
+
+    if ((click === "+" || click === "-" || click === "*" || click === "÷") ||
+      (lastValue === "+" || lastValue === "-" || lastValue === "*" || lastValue === "÷")) {
+      operationArray.push(click);
+    } else {
+      operationArray[operationArray.length - 1] += click;
+    }
   }
 
   // handle "AC", "+/-", and "%" button clicks
@@ -64,16 +80,18 @@ export class Result extends React.Component {
     let output;
 
     if (click === "AC") {
-      // on "AC" button click, set result to 0
+      // on "AC" button click, set result to 0, clear operationArray
       output = 0;
-      operationArray = [];
-    } else if ((click === "negative" || click === "+/-") && displayed > 0) {
-      // on "+/-" button click, flip result from positive to negative
-      output = -Math.abs(displayed);
-      operationArray[operationArray.length - 1] = output;
-    } else if ((click === "negative" || click === "+/-") && displayed < 0) {
-      // on "+/-" button click, flip result from negative to positive
-      output = Math.abs(displayed);
+      operationArray = ["0"];
+    } else if (click === "+/-") {
+      // on "+/-" button click, toggle "-"
+      if (Number(displayed) > 0) {
+        output = -Math.abs(Number(displayed));
+        output = output.toString();
+      } else if (Number(displayed) < 0) {
+        output = Math.abs(Number(displayed));
+        output = output.toString();
+      }
       operationArray[operationArray.length - 1] = output;
     } else if (click === "%") {
       // on "%" button click, move two decimal places down
@@ -87,10 +105,11 @@ export class Result extends React.Component {
   // handle "=" button click, perform the calculation
   // *** TODO ***
   performCalculation() {
-    let result = operationArray;
-    operationArray = [];
+    let result = 0;
+
     // *** placeholder lul ***
     result = 42;
+    operationArray = ["0"];
     return result;
   }
 
