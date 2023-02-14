@@ -103,12 +103,27 @@ export class Result extends React.Component {
   }
 
   // handle "=" button click, perform the calculation
-  // *** TODO ***
   performCalculation() {
     let result = 0;
 
-    // *** placeholder lul ***
-    result = 42;
+    if (operationArray.length <= 2) {
+      result = Number(operationArray[0]);
+    } else if (operationArray.length > 2) {
+      let operators = {
+        "+": function(a, b) { return Number(a) + Number(b) },
+        "-": function(a, b) { return Number(a) - Number(b) },
+        "*": function(a, b) { return Number(a) * Number(b) },
+        "÷": function(a, b) { return Number(a) / Number(b) }
+      }
+  
+      do {
+        operationArray[2] = operators[operationArray[1]](operationArray[0], operationArray[2]);
+        operationArray.splice(0, 2);
+      } while (operationArray.length > 1);
+
+      result = operationArray[0];
+    }
+
     operationArray = ["0"];
     return result;
   }
