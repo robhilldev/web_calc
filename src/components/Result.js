@@ -26,7 +26,7 @@ export class Result extends React.Component {
       if (prevProps.data === "=" || prevProps.data === "AC" || prevProps.data === null) {
         // replace previous contents of result pane on new button click
         // or add a first click of "." after a "0"
-        currentDisplayed = this.updateDisplay("0", click);
+        currentDisplayed = this.updateDisplay("", click);
       } else {
         // update result pane normally
         currentDisplayed = this.updateDisplay(currentDisplayed, click);
@@ -38,28 +38,33 @@ export class Result extends React.Component {
 
   // update value shown in results pane, and push to operator array on some clicks
   updateDisplay(currentDisplayed, click) {
-    let displayed = currentDisplayed;
-
     if (click === "AC" || click === "negative" || click === "+/-" || click === "%") {
       // on "AC", "+/-", or "%" button clicks, modify value based on operator
-      displayed = this.performMiscOperation(click);
+      currentDisplayed = this.performMiscOperation(click);
     } else if (click === "+" || click === "-" || click === "*" || click === "÷") {
       // on operator click, update display and push to operator array
-      displayed = click;
+      currentDisplayed = click;
       this.updateOperationArray(click);
     } else if (click === "=") {
       // on "=" button click, display result of calculation
-      displayed = this.performCalculation();
+      currentDisplayed = this.performCalculation();
+    } else if (click === "." && (currentDisplayed === "" || currentDisplayed === "+" || 
+              currentDisplayed === "-" || currentDisplayed === "*" || currentDisplayed === "÷")) {
+      // on "." click before other number, append 0 before ".", push to operator array
+      currentDisplayed = "0" + click;
+      this.updateOperationArray(click);
     } else {
       // on number or "." click, update display and push to operator array
-      if (displayed === "+" || displayed === "-" ||
-        displayed === "*" || displayed === "÷") {
-        displayed = click;
-      } else { displayed += click; }
+      if (currentDisplayed === "+" || currentDisplayed === "-" ||
+        currentDisplayed === "*" || currentDisplayed === "÷") {
+        currentDisplayed = click;
+      } else {
+        currentDisplayed += click;
+      }
       this.updateOperationArray(click);
     }
 
-    return displayed;
+    return currentDisplayed;
   }
 
   // update operation array on number, ".", "+", "-", "X", or "÷" clicks
@@ -118,7 +123,7 @@ export class Result extends React.Component {
         "*": function(a, b) { return Number(a) * Number(b) },
         "÷": function(a, b) { return Number(a) / Number(b) }
       }
-      let multiplyIndex, divideIndex; 
+      let multiplyIndex, divideIndex;
 
       // carry out operations one by one, respecting order of operations
       do {
