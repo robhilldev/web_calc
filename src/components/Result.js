@@ -107,18 +107,48 @@ export class Result extends React.Component {
     let result = 0;
 
     if (operationArray.length <= 2) {
+      // given only a single number, with or without a trailing operator, return the number
       result = Number(operationArray[0]);
     } else if (operationArray.length > 2) {
+      // given at least 3 values (two numbers and an operator) are present, perform operation(s)
+      // map operator strings to functions that perform that operators function
       let operators = {
         "+": function(a, b) { return Number(a) + Number(b) },
         "-": function(a, b) { return Number(a) - Number(b) },
         "*": function(a, b) { return Number(a) * Number(b) },
         "÷": function(a, b) { return Number(a) / Number(b) }
       }
-  
+      let multiplyIndex, divideIndex; 
+
+      // carry out operations one by one, respecting order of operations
       do {
-        operationArray[2] = operators[operationArray[1]](operationArray[0], operationArray[2]);
-        operationArray.splice(0, 2);
+        multiplyIndex = operationArray.indexOf("*");
+        divideIndex = operationArray.indexOf("÷");
+
+        if (((multiplyIndex !== -1 && divideIndex !== -1) && (multiplyIndex < divideIndex)) ||
+            ((multiplyIndex !== -1 || divideIndex !== -1) && (multiplyIndex > divideIndex))) {
+          // perform multiplication if it appears before division, or if no division is present
+          operationArray.splice(
+            multiplyIndex - 1, 3,
+            operators[operationArray[multiplyIndex]](
+              operationArray[multiplyIndex - 1], operationArray[multiplyIndex + 1]
+            )
+          );
+        } else if (((multiplyIndex !== -1 && divideIndex !== -1) && (multiplyIndex > divideIndex)) ||
+                   ((multiplyIndex !== -1 || divideIndex !== -1) && (multiplyIndex < divideIndex))) {
+          // perform division if it appears before multiplication, or if no multiplication is present
+          operationArray.splice(
+            divideIndex - 1, 3,
+            operators[operationArray[divideIndex]](
+              operationArray[divideIndex - 1], operationArray[divideIndex + 1]
+            )
+          );
+        } else {
+          // perform remaining operations from left to right
+          operationArray.splice(
+            0, 3, operators[operationArray[1]](operationArray[0], operationArray[2])
+          );
+        }
       } while (operationArray.length > 1);
 
       result = operationArray[0];
