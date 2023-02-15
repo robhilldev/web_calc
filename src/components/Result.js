@@ -117,19 +117,20 @@ export class Result extends React.Component {
     } else if (operationArray.length > 2) {
       // given at least 3 values (two numbers and an operator) are present, perform operation(s)
       // map operator strings to functions that perform that operators function
+      let modulator = 1000000000000000;
       let operators = {
         // improve precision by multiplying and dividing by 10000000 to operate on integers instead of floats
         "+": function(a, b) {
-          return ((Number(a) * 1000000000000) + (Number(b) * 1000000000000)) / 1000000000000
+          return ((Number(a) * modulator) + (Number(b) * modulator)) / modulator
         },
         "-": function(a, b) {
-          return ((Number(a) * 1000000000000) - (Number(b) * 1000000000000)) / 1000000000000
+          return ((Number(a) * modulator) - (Number(b) * modulator)) / modulator
         },
         "*": function(a, b) {
-          return ((Number(a) * 1000000000000) * (Number(b) * 1000000000000)) / (1000000000000 * 1000000000000)
+          return ((Number(a) * modulator) * (Number(b) * modulator)) / (modulator * modulator)
         },
         "÷": function(a, b) {
-          return ((Number(a) * 1000000000000) / (Number(b) * 1000000000000)) / (1000000000000 / 1000000000000)
+          return ((Number(a) * modulator) / (Number(b) * modulator)) / (modulator / modulator)
         }
       }
       let multiplyIndex, divideIndex;
