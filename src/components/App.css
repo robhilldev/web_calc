@@ -3,30 +3,28 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #89A4AB;
   min-height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-body {
-  background-color: burlywood;
+  background-color: #E5A960;
   min-height: 70vh;
 }
 
 .App-footer {
-  background-color: #282c34;
+  background-color: #89A4AB;
   min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 1vmin);
-  color: white;
 }
 
 .App-link {
