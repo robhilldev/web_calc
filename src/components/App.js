@@ -6,13 +6,15 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Web Calc</h1>
+        <div>
+          <h1>Web Calc</h1>
+        </div>
       </header>
       <div className="App-body">
         <Calculator />
       </div>
       <footer className="App-footer">
-        <p>Made by rhd</p>
+        <p>Made by robhilldev</p>
       </footer>
     </div>
   );
