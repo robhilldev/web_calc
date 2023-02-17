@@ -27,6 +27,10 @@ export class Result extends React.Component {
         // replace previous contents of result pane on new button click
         // or add a first click of "." after a "0"
         currentDisplayed = this.updateDisplay("", click);
+      } else if ((prevProps.data.includes("+/-") && this.state.displayed === "0") ||
+                 (prevProps.data.includes("%") && this.state.displayed === "0")) {
+        // replace previous contents of result pane after +/- or % click on 0
+        currentDisplayed = this.updateDisplay("", click);
       } else {
         // update result pane normally
         currentDisplayed = this.updateDisplay(currentDisplayed, click);
@@ -86,21 +90,24 @@ export class Result extends React.Component {
 
     if (click === "AC") {
       // on "AC" button click, set result to 0, clear operationArray
-      output = 0;
+      output = "0";
       operationArray = ["0"];
     } else if (click === "+/-") {
       // on "+/-" button click, toggle "-"
       if (Number(displayed) > 0) {
         output = -Math.abs(Number(displayed));
         output = output.toString();
+        operationArray[operationArray.length - 1] = output;
       } else if (Number(displayed) < 0) {
         output = Math.abs(Number(displayed));
         output = output.toString();
+        operationArray[operationArray.length - 1] = output;
+      } else {
+        output = "0";
       }
-      operationArray[operationArray.length - 1] = output;
     } else if (click === "%") {
       // on "%" button click, move two decimal places down
-      output = parseFloat(displayed) * 0.01;
+      output = (parseFloat(displayed) * 0.01).toString();
       operationArray[operationArray.length - 1] = output;
     }
 
@@ -116,10 +123,11 @@ export class Result extends React.Component {
       result = Number(operationArray[0]);
     } else if (operationArray.length > 2) {
       // given at least 3 values (two numbers and an operator) are present, perform operation(s)
-      // map operator strings to functions that perform that operators function
       let modulator = 1000000000000000;
+      // map operator strings to functions that perform that operators function
       let operators = {
-        // improve precision by multiplying and dividing by 10000000 to operate on integers instead of floats
+        // improve precision by multiplying and dividing by 1000000000000000
+        // to operate on integers instead of floats
         "+": function(a, b) {
           return ((Number(a) * modulator) + (Number(b) * modulator)) / modulator
         },

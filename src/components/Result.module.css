@@ -1,7 +1,6 @@
 th {
   width: 60vh;
   height: 10vh;
-  border: 0.5vmin solid #89A4AB;
 }
 
 th div {
@@ -13,5 +12,5 @@ th div {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0.1vh 0.1vh 0.5vh black;
+  box-shadow: 0.05vh 0.05vh 0.5vh black;
 }
