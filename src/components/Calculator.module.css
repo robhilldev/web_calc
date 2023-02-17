@@ -1,6 +1,6 @@
 table {
   border-spacing: 0;
-  min-height: 60vh;
+  min-height: 75vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,7 +9,7 @@ table {
 
 td {
   width: 15vh;
-  height: 7.5vh;
+  height: 10vh;
 }
 
 button {

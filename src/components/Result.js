@@ -177,7 +177,7 @@ export class Result extends React.Component {
       result = operationArray[0];
     }
 
-    operationArray = ["0"];
+    operationArray = [result.toString()];
     return result;
   }
 

@@ -5,19 +5,18 @@
 
 .App-header {
   background-color: #547688;
-  min-height: 20vh;
+  min-height: 15vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
 }
 
 .App-header div {
   background-color: #89A4AB;
-  height: 10vh;
-  width: 50%;
-  font-size: large;
+  height: 7.5vh;
+  width: 50vh;
+  font-size: medium;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,7 +27,7 @@
 
 .App-body {
   background-color: #E5A960;
-  min-height: 70vh;
+  min-height: 75vh;
 }
 
 .App-footer {
