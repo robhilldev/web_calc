@@ -26,6 +26,9 @@ export class Result extends React.Component {
       if (prevProps.data === "=" || prevProps.data === "AC" || prevProps.data === null) {
         // replace previous contents of result pane on new button click
         // or add a first click of "." after a "0"
+
+        // clear operation array on number click after result, before updating display
+        if (!isNaN(click)) { operationArray = ["0"]; }
         currentDisplayed = this.updateDisplay("", click);
       } else if ((prevProps.data.includes("+/-") && this.state.displayed === "0") ||
                  (prevProps.data.includes("%") && this.state.displayed === "0")) {
@@ -61,8 +64,10 @@ export class Result extends React.Component {
       // on number or "." click, update display and push to operator array
       if (currentDisplayed === "+" || currentDisplayed === "-" ||
         currentDisplayed === "*" || currentDisplayed === "÷") {
+        // replace operator with number clicked
         currentDisplayed = click;
       } else {
+        // append click to what is displayed
         currentDisplayed += click;
       }
       this.updateOperationArray(click);
