@@ -15,7 +15,7 @@
 .App-header div {
   background-color: #89A4AB;
   height: 7.5vh;
-  width: 50vh;
+  max-width: fit-content;
   font-size: medium;
   display: flex;
   flex-direction: column;
