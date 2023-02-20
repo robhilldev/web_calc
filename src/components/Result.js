@@ -148,6 +148,9 @@ export class Result extends React.Component {
       }
       let multiplyIndex, divideIndex;
 
+      // remove a trailing operator if present, before carrying out operations
+      if (operationArray.length % 2 === 0) operationArray.pop();
+
       // carry out operations one by one, respecting order of operations
       do {
         multiplyIndex = operationArray.indexOf("*");
