@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import App from './components/App';
+import App from '../components/App';
 
 test('renders web_calc title, calculator table, and footer', () => {
   render(<App />);
