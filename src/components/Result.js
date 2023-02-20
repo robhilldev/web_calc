@@ -1,4 +1,5 @@
 import React from 'react';
+import Big from 'big.js';
 import './Result.module.css';
 
 // place to store numbers and operators until calculation happens
@@ -128,23 +129,13 @@ export class Result extends React.Component {
       result = Number(operationArray[0]);
     } else if (operationArray.length > 2) {
       // given at least 3 values (two numbers and an operator) are present, perform operation(s)
-      let modulator = 1000000000000000;
+
       // map operator strings to functions that perform that operators function
       let operators = {
-        // improve precision by multiplying and dividing by 1000000000000000
-        // to operate on integers instead of floats
-        "+": function(a, b) {
-          return ((Number(a) * modulator) + (Number(b) * modulator)) / modulator
-        },
-        "-": function(a, b) {
-          return ((Number(a) * modulator) - (Number(b) * modulator)) / modulator
-        },
-        "*": function(a, b) {
-          return ((Number(a) * modulator) * (Number(b) * modulator)) / (modulator * modulator)
-        },
-        "÷": function(a, b) {
-          return ((Number(a) * modulator) / (Number(b) * modulator)) / (modulator / modulator)
-        }
+        "+": function(a, b) { return (Big(a).plus(Big(b))).toString() },
+        "-": function(a, b) { return (Big(a).minus(Big(b))).toString() },
+        "*": function(a, b) { return (Big(a).times(Big(b))).toString() },
+        "÷": function(a, b) { return (Big(a).div(Big(b))).toString() }
       }
       let multiplyIndex, divideIndex;
 
