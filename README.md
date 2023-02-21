@@ -2,9 +2,10 @@
 
 ---
 
-### A simple calculator that runs in the browser and:
+### A calculator that runs in the browser and:
 - Can handle multiple operators at a time
 - Respects order of operations
+- Can be installed as a Progressive Web App (PWA)
 
 ---
 
