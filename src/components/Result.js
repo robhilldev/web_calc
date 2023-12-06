@@ -127,6 +127,12 @@ export class Result extends React.Component {
     if (operationArray.length <= 2) {
       // given only a single number, with or without a trailing operator, return the number
       result = Number(operationArray[0]);
+    } else if (operationArray.length >= 2
+              && operationArray[operationArray.length - 2] === "÷"
+              && operationArray[operationArray.length - 1] === "0") {
+      // return error on division by 0 instead of letting app implode
+      operationArray = ["0"];
+      return "y you do this";
     } else if (operationArray.length > 2) {
       // given at least 3 values (two numbers and an operator) are present, perform operation(s)
 

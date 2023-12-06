@@ -1,4 +1,5 @@
-## Try it --> https://robhilldev.github.io/web_calc/
+## Try it
+https://robhilldev.github.io/web_calc/
 
 ---
 
